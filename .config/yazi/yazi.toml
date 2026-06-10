@@ -1,0 +1,7 @@
+[mgr]
+show_hidden = true
+
+[opener]
+edit = [
+	{ run = "emacsc %s", block = true, orphan = true, for = "unix" }
+]

@@ -1,0 +1,62 @@
+# Example autostart file
+
+# When running under systemd, uncomment the systemctl line below to pull in
+# graphical-session.target via labwc-session.target. This lets systemd user
+# services declaring WantedBy=graphical-session.target (panels, portals,
+# notification daemons, etc.) start in sync with the labwc session. Enable
+# individual services with: systemctl --user enable <unit>
+#
+systemctl --user --no-block start labwc-session.target
+
+# Set background img.
+swaybg -i /mnt/shared/Media/bg/52230597587_432d014d29_b_waifu2x_art_scan_noise0_scale.png >/dev/null 2>&1 &
+
+# Configure output directives such as mode, position, scale and transform.
+# Use wlr-randr to get your output names.
+# Example ~/.config/kanshi/config below:
+#   profile {
+#     output HDMI-A-1 position 1366,0
+#     output eDP-1 position 0,0
+#   }
+# kanshi >/dev/null 2>&1 &
+
+# Launch a panel such as yambar or waybar.
+(sleep 2; nohup polybar wow 2>/dev/null & disown) &
+
+# To delay the launch of a particular client it is suggested that the following
+# syntax is used: ( sleep X ; foo ) &
+# For example, with waybar a three second delay could be achieved with:
+#   ( sleep 3 ; waybar >/dev/null 2>&1 ) &
+
+# Enable notifications. Typically GNOME/KDE application notifications go
+# through the org.freedesktop.Notifications D-Bus API and require a client such
+# as mako to function correctly. Thunderbird is an example of this.
+mako >/dev/null 2>&1 &
+
+# Lock screen after 5 minutes; turn off display after another 5 minutes.
+#
+# Note that in the context of idle system power management, it is *NOT* a good
+# idea to turn off displays by 'disabling outputs' for example by
+# `wlr-randr --output <whatever> --off` because this re-arranges windows
+# (since a837fef). Instead use a wlr-output-power-management client such as
+# https://git.sr.ht/~leon_plickat/wlopm
+# swayidle \
+# 	timeout 300 'hyprlock' \
+# 	timeout 900 'systemctl suspend' \
+# 	before-sleep 'hyprlock' >/dev/null 2>&1 &
+/home/pineapple/.local/bin/my_stuff/swayidle-runconf 2>/dev/null &
+
+exec sway-audio-idle-inhibit &
+
+/home/pineapple/.local/bin/emacs --daemon &
+
+/home/pineapple/.local/bin/my_stuff/run-syncthing &
+
+/mnt/shared/linux/programs/activitywatch/aw-qt &
+/mnt/shared/linux/programs/activitywatch/aw-awatcher &
+
+clipse -listen & disown
+
+nohup kdeconnectd &
+
+nohup gammastep -l 12.9:77.6 >/dev/null 2>&1 &

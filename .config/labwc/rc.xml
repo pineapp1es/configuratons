@@ -1,0 +1,319 @@
+<labwc_config>
+  <placement>
+    <policy>automatic</policy>
+  </placement>
+  <windowRules>
+    <windowRule title="confirm" serverDecoration="no">
+      <action name="AutoPlace" policy="center" />
+    </windowRule>
+  </windowRules>
+  <theme>
+    <name>gruvbox-material-dark-blocks</name>
+    <cornerRadius>0</cornerRadius>
+    <titlebar>
+      <layout>:iconify,max,close</layout>
+    </titlebar>
+    <dropShadows>no</dropShadows>
+    <maximizedDecoration>titlebar</maximizedDecoration>
+    <icon>Chicago95-tux</icon>
+  </theme>
+  <desktops number="10" />
+  <keyboard>
+    <repeatDelay>300</repeatDelay>
+    <repeatRate>43</repeatRate>
+    <!-- RECONFIG KEYBIND -->
+    <keybind key="W-S-r">
+      <action name="Reconfigure" />
+    </keybind>
+    <!-- HIDE CURSOR -->
+    <keybind key="W-C-S-A-Print">
+      <action name="HideCursor" />
+    </keybind>
+    <!-- SCREENSHOTTING -->
+    <keybind key="W-Print">
+      <action name="Execute" command="/home/pineapple/.local/bin/my_stuff/ssToFileAndClipboard" />
+    </keybind>
+    <keybind key="W-S-x">
+      <action name="Execute" command="/home/pineapple/.local/bin/my_stuff/snipToClipboard" />
+    </keybind>
+    <!-- LOCK AND SLEEP AND SHUTDOWN AND RESTART AND SIGNOUT -->
+    <keybind key="W-A-l">
+      <action name="Execute" command="hyprlock --no-fade-in" />
+    </keybind>
+    <keybind key="W-A-z">
+      <action name="Execute" command="systemctl suspend" />
+    </keybind>
+    <keybind key="W-A-s">
+      <action name="Execute" command="/home/pineapple/.local/bin/my_stuff/shutdown-confirm" />
+    </keybind>
+    <keybind key="W-A-r">
+      <action name="Execute" command="/home/pineapple/.local/bin/my_stuff/reboot-confirm" />
+    </keybind>
+    <keybind key="W-A-t">
+      <action name="Execute" command="/home/pineapple/.local/bin/my_stuff/signout-confirm" />
+    </keybind>
+    <!-- RUN PROGRAMS -->
+    <keybind key="W-Tab">
+      <action name="Execute" command="rofi -show window" />
+    </keybind>
+    <keybind key="W-Space">
+      <action name="Execute" command="rofi -show drun" />
+    </keybind>
+    <keybind key="W-C-Space">
+      <action name="Execute" command="rofi -show run" />
+    </keybind>
+    <keybind key="W-t">
+      <action name="Execute" command="foot" />
+    </keybind>
+    <keybind key="W-b">
+      <action name="Execute" command="firefox" />
+    </keybind>
+    <keybind key="W-f">
+      <action name="Execute" command="foot -T yazi yazi" />
+    </keybind>
+    <keybind key="W-e">
+      <action name="Execute" command="/home/pineapple/.local/bin/emacsclient -c" />
+    </keybind>
+    <keybind key="W-p">
+      <action name="Execute" command="/home/pineapple/.local/bin/my_stuff/toggle-polybar" />
+    </keybind>
+    <keybind key="W-v">
+      <action name="Execute" command="foot -T clipse clipse" />
+    </keybind>
+    <!-- VIRTUAL DESKTOP CONTROL -->
+    <keybind key="W-h">
+      <action name="GoToDesktop" to="left" wrap="yes" />
+    </keybind>
+    <keybind key="W-l">
+      <action name="GoToDesktop" to="right" wrap="yes" />
+    </keybind>
+    <keybind key="W-j">
+      <action name="GoToDesktop" to="1" />
+    </keybind>
+    <keybind key="W-k">
+      <action name="GoToDesktop" to="10" />
+    </keybind>
+    <keybind key="W-1">
+      <action name="GoToDesktop" to="1" />
+    </keybind>
+    <keybind key="W-2">
+      <action name="GoToDesktop" to="2" />
+    </keybind>
+    <keybind key="W-3">
+      <action name="GoToDesktop" to="3" />
+    </keybind>
+    <keybind key="W-4">
+      <action name="GoToDesktop" to="4" />
+    </keybind>
+    <keybind key="W-5">
+      <action name="GoToDesktop" to="5" />
+    </keybind>
+    <keybind key="W-6">
+      <action name="GoToDesktop" to="6" />
+    </keybind>
+    <keybind key="W-7">
+      <action name="GoToDesktop" to="7" />
+    </keybind>
+    <keybind key="W-8">
+      <action name="GoToDesktop" to="8" />
+    </keybind>
+    <keybind key="W-9">
+      <action name="GoToDesktop" to="9" />
+    </keybind>
+    <keybind key="W-0">
+      <action name="GoToDesktop" to="10" />
+    </keybind>
+    <!-- = move window with me -->
+    <keybind key="W-S-h">
+      <action name="SendToDesktop" to="left" wrap="yes" />
+    </keybind>
+    <keybind key="W-S-l">
+      <action name="SendToDesktop" to="right" wrap="yes" />
+    </keybind>
+    <keybind key="W-S-j">
+      <action name="SendToDesktop" to="1" follow="yes" />
+    </keybind>
+    <keybind key="W-S-k">
+      <action name="SendToDesktop" to="10" follow="yes" />
+    </keybind>
+    <keybind key="W-S-1">
+      <action name="SendToDesktop" to="1" />
+    </keybind>
+    <keybind key="W-S-2">
+      <action name="SendToDesktop" to="2" />
+    </keybind>
+    <keybind key="W-S-3">
+      <action name="SendToDesktop" to="3" />
+    </keybind>
+    <keybind key="W-S-4">
+      <action name="SendToDesktop" to="4" />
+    </keybind>
+    <keybind key="W-S-5">
+      <action name="SendToDesktop" to="5" />
+    </keybind>
+    <keybind key="W-S-6">
+      <action name="SendToDesktop" to="6" />
+    </keybind>
+    <keybind key="W-S-7">
+      <action name="SendToDesktop" to="7" />
+    </keybind>
+    <keybind key="W-S-8">
+      <action name="SendToDesktop" to="8" />
+    </keybind>
+    <keybind key="W-S-9">
+      <action name="SendToDesktop" to="9" />
+    </keybind>
+    <keybind key="W-S-0">
+      <action name="SendToDesktop" to="10" />
+    </keybind>
+    <!-- WINDOW POSITION CONTROL -->
+    <keybind key="W-C-k">
+      <action name="ToggleSnapToEdge" direction="up" combine="yes" />
+    </keybind>
+    <keybind key="W-C-j">
+      <action name="ToggleSnapToEdge" direction="down" combine="yes" />
+    </keybind>
+    <keybind key="W-C-h">
+      <action name="ToggleSnapToEdge" direction="left" combine="yes" />
+    </keybind>
+    <keybind key="W-C-l">
+      <action name="ToggleSnapToEdge" direction="right" combine="yes" />
+    </keybind>
+    <keybind key="W-S-w">
+      <action name="MoveRelative" x="0" y="-20" />
+    </keybind>
+    <keybind key="W-S-s">
+      <action name="MoveRelative" x="0" y="20" />
+    </keybind>
+    <keybind key="W-S-a">
+      <action name="MoveRelative" x="-20" y="0" />
+    </keybind>
+    <keybind key="W-S-d">
+      <action name="MoveRelative" x="20" y="0" />
+    </keybind>
+    <!-- WINDOW SIZE CONTROL -->
+    <!-- = make bigger -->
+    <keybind key="W-S-b">
+      <action name="ResizeRelative" left="0" right="0" top="20" bottom="0" />
+    </keybind>
+    <keybind key="W-S-v">
+      <action name="ResizeRelative" left="0" right="0" top="0" bottom="20" />
+    </keybind>
+    <keybind key="W-S-c">
+      <action name="ResizeRelative" left="20" right="0" top="0" bottom="0" />
+    </keybind>
+    <keybind key="W-S-n">
+      <action name="ResizeRelative" left="0" right="20" top="0" bottom="0" />
+    </keybind>
+    <!-- = make smaller -->
+    <keybind key="W-S-.">
+      <action name="ResizeRelative" left="0" right="0" top="-20" bottom="0" />
+    </keybind>
+    <keybind key="W-S-,">
+      <action name="ResizeRelative" left="0" right="0" top="0" bottom="-20" />
+    </keybind>
+    <keybind key="W-S-m">
+      <action name="ResizeRelative" left="-20" right="0" top="0" bottom="0" />
+    </keybind>
+    <keybind key="W-S-/">
+      <action name="ResizeRelative" left="0" right="-20" top="0" bottom="0" />
+    </keybind>
+    <!-- = to edge -->
+    <keybind key="W-C-w">
+      <action name="GrowToEdge" direction="up"   />
+    </keybind>
+    <keybind key="W-C-s">
+      <action name="GrowToEdge" direction="down"   />
+      <gap>0</gap>
+    </keybind>
+    <keybind key="W-C-a">
+      <action name="GrowToEdge" direction="left"   />
+    </keybind>
+    <keybind key="W-C-d">
+      <action name="GrowToEdge" direction="right"   />
+    </keybind>
+    <!-- WINDOW CONTROL -->
+    <keybind key="W-i">
+      <action name="ToggleShade" />
+    </keybind>
+    <keybind key="W-y">
+      <action name="AutoPlace" policy="automatic" />
+    </keybind>
+    <keybind key="W-u">
+      <action name="ToggleAlwaysOnBottom" />
+    </keybind>
+    <keybind key="W-S-u">
+      <action name="ToggleAlwaysOnTop" />
+    </keybind>
+    <keybind key="W-S-o">
+      <action name="ToggleOmnipresent" />
+    </keybind>
+    <keybind key="W-q">
+      <action name="Close" />
+    </keybind>
+    <keybind key="A-Tab">
+      <action name="NextWindow" />
+    </keybind>
+    <keybind key="W-m">
+      <action name="ToggleMaximize" />
+    </keybind>
+    <keybind key="W-d">
+      <action name="ToggleShowDesktop" />
+    </keybind>
+    <keybind key="W-,">
+      <action name="Iconify" />
+    </keybind>
+    <keybind key="W-C-=">
+      <action name="ToggleDecorations" />
+    </keybind>
+    <!-- BRIGHTNESS CONTROL -->
+    <keybind key="XF86MonBrightnessUp">
+      <action name="Execute" command="brightnessctl-wrapper set +1%" />
+    </keybind>
+    <keybind key="XF86MonBrightnessDown">
+      <action name="Execute" command="brightnessctl-wrapper set 1%-" />
+    </keybind>
+    <keybind key="W-C-'">
+      <action name="Execute" command="brightnessctl-wrapper set +1%" />
+    </keybind>
+    <keybind key="W-C-;">
+      <action name="Execute" command="brightnessctl-wrapper set 1%-" />
+    </keybind>
+    <!-- AUDIO CONTROL -->
+    <keybind key="XF86AudioLowerVolume">
+      <action name="Execute" command="pamixer -d 1" />
+    </keybind>
+    <keybind key="XF86AudioRaiseVolume">
+      <action name="Execute" command="pamixer -i 1" />
+    </keybind>
+    <keybind key="W-C-,">
+      <action name="Execute" command="pamixer -d 1" />
+    </keybind>
+    <keybind key="W-C-.">
+      <action name="Execute" command="pamixer -i 1" />
+    </keybind>
+
+    <keybind key="XF86AudioMute">
+      <action name="Execute" command="pamixer -t" />
+    </keybind>
+    <keybind key="W-C-/">
+      <action name="Execute" command="pamixer -t" />
+    </keybind>
+
+    <keybind key="XF86AudioMicMute">
+      <action name="Execute" command="/home/pineapple/.local/bin/my_stuff/toggle-mic-mute" />
+    </keybind>
+    <keybind key="W-C-m">
+      <action name="Execute" command="/home/pineapple/.local/bin/my_stuff/toggle-mic-mute" />
+    </keybind>
+  </keyboard>
+  <core>
+    <decoration>server</decoration>
+    <gap>0</gap>
+  </core>
+  <libinput>
+    <device>
+      <naturalScroll>no</naturalScroll>
+    </device>
+  </libinput>
+</labwc_config>

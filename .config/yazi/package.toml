@@ -1,0 +1,22 @@
+[plugin]
+deps = []
+
+[[flavor.deps]]
+use = "malick-tammal/monokai"
+rev = "7e709d4"
+hash = "f929d5c5c7fdf1c0aa231c1f49dae88"
+
+[[flavor.deps]]
+use = "bennyyip/gruvbox-dark"
+rev = "619fdc5"
+hash = "d4c7003ec6dc4efd5d3a050d5c2f2575"
+
+[[flavor.deps]]
+use = "matt-dong-123/gruvbox-material"
+rev = "e0fd2d8"
+hash = "8f46ca96c0bbe1bdfb4fa201dd5eed4b"
+
+[[flavor.deps]]
+use = "identityapproved/lain"
+rev = "e2a3bb2"
+hash = "992f7d08d6093732621ff49022ef6053"

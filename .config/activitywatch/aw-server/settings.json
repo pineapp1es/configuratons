@@ -1,0 +1,317 @@
+{
+    "initialTimestamp": "2026-04-17T14:08:11.304Z",
+    "startOfDay": "00:00",
+    "startOfWeek": "Monday",
+    "durationDefault": 14400,
+    "landingpage": "/activity/machine/view/",
+    "theme": "dark",
+    "newReleaseCheckData": {
+        "isEnabled": true,
+        "nextCheckTime": "2026-06-01T09:26:53.145Z",
+        "howOftenToCheck": 86400,
+        "timesChecked": 0
+    },
+    "userSatisfactionPollData": {
+        "isEnabled": false,
+        "nextPollTime": "2026-05-01T17:14:09.063Z",
+        "timesPollIsShown": 1
+    },
+    "classes": [
+        {
+            "data": {
+                "color": "#808900"
+            },
+            "id": 0,
+            "name": [
+                "wow productive !!!"
+            ],
+            "rule": {
+                "regex": "Google Docs|libreoffice|ReText|.*okular.*",
+                "type": "regex"
+            }
+        },
+        {
+            "data": {
+                "color": "#16A5A5"
+            },
+            "id": 1,
+            "name": [
+                "wow productive !!!",
+                "progammer"
+            ],
+            "rule": {
+                "ignore_case": true,
+                "regex": "GitHub|Stack Overflow|BitBucket|Gitlab|vim|Spyder|kate|Ghidra|Scite|Emacs| .*E M A C S.*|.*jetbrains-studio.*|.*foot.*|.*godot.*|.*jetbrains-idea.*",
+                "type": "regex"
+            }
+        },
+        {
+            "data": {
+                "color": "#000000"
+            },
+            "id": 2,
+            "name": [
+                "web browsing",
+                "looking at my screentime (maybe config)"
+            ],
+            "rule": {
+                "ignore_case": true,
+                "regex": ".*ActivityWatch.*",
+                "type": "regex"
+            }
+        },
+        {
+            "data": {
+                "color": "#FDA1FF"
+            },
+            "id": 3,
+            "name": [
+                "wow productive !!!",
+                "pixels"
+            ],
+            "rule": {
+                "ignore_case": true,
+                "regex": "GIMP|Inkscape|.*aseprite.*",
+                "type": "regex"
+            }
+        },
+        {
+            "data": {
+                "color": "#C45100"
+            },
+            "id": 4,
+            "name": [
+                "gamer"
+            ],
+            "rule": {
+                "type": "none"
+            }
+        },
+        {
+            "data": {
+                "color": "#F33"
+            },
+            "id": 5,
+            "name": [
+                "web browsing",
+                "watching stuff"
+            ],
+            "rule": {
+                "ignore_case": true,
+                "regex": ".*YouTube.*|Plex|VLC|.*ani.*",
+                "type": "regex"
+            }
+        },
+        {
+            "data": {
+                "color": "#FCC400"
+            },
+            "id": 6,
+            "name": [
+                "web browsing",
+                "media of the socials"
+            ],
+            "rule": {
+                "ignore_case": true,
+                "regex": ".*reddit.*|.*instagram.*|.*whatsapp.*|.*discord.*",
+                "type": "regex"
+            }
+        },
+        {
+            "data": {
+                "color": "#FCDC00"
+            },
+            "id": 7,
+            "name": [
+                "web browsing",
+                "electronical mailings"
+            ],
+            "rule": {
+                "ignore_case": true,
+                "regex": "Gmail|Thunderbird|mutt|alpine",
+                "type": "regex"
+            }
+        },
+        {
+            "data": {
+                "color": "#CCC"
+            },
+            "id": 8,
+            "name": [
+                "????"
+            ],
+            "rule": {
+                "type": "none"
+            }
+        },
+        {
+            "data": {
+                "color": "#7B64FF"
+            },
+            "id": 9,
+            "name": [
+                "web browsing"
+            ],
+            "rule": {
+                "ignore_case": true,
+                "regex": "Firefox",
+                "type": "regex"
+            }
+        },
+        {
+            "data": {
+                "color": "#0062B1"
+            },
+            "id": 10,
+            "name": [
+                "wow productive !!!",
+                "study"
+            ],
+            "rule": {
+                "ignore_case": true,
+                "regex": ".*okular.*|.*develop.*|.*documentation.*|.*docs|.*algorithm.*|.*code.*",
+                "type": "regex"
+            }
+        },
+        {
+            "data": {
+                "color": "#E27300"
+            },
+            "id": 11,
+            "name": [
+                "gamer",
+                "block game"
+            ],
+            "rule": {
+                "ignore_case": true,
+                "regex": ".*minecraft\\*.*",
+                "type": "regex"
+            }
+        },
+        {
+            "data": {
+                "color": "#000000"
+            },
+            "id": 12,
+            "name": [
+                "dunno how to not track this stuff"
+            ],
+            "rule": {
+                "ignore_case": true,
+                "regex": "rofi|timer",
+                "type": "regex"
+            }
+        },
+        {
+            "data": {
+                "color": "#653294"
+            },
+            "id": 13,
+            "name": [
+                "wow productive !!!",
+                "and you will absolutely understand guitar !"
+            ],
+            "rule": {
+                "ignore_case": true,
+                "regex": ".*lesson [0-9]+ -",
+                "type": "regex"
+            }
+        },
+        {
+            "data": {
+                "color": "#194D33"
+            },
+            "id": 14,
+            "name": [
+                "wow productive !!!",
+                "leetcode ?!???!"
+            ],
+            "rule": {
+                "ignore_case": true,
+                "regex": "leetcode",
+                "type": "regex"
+            }
+        }
+    ],
+    "views": [
+        {
+            "elements": [
+                {
+                    "size": 3,
+                    "type": "top_apps"
+                },
+                {
+                    "size": 3,
+                    "type": "top_titles"
+                },
+                {
+                    "size": 3,
+                    "type": "timeline_barchart"
+                },
+                {
+                    "size": 3,
+                    "type": "top_categories"
+                },
+                {
+                    "size": 3,
+                    "type": "category_tree"
+                },
+                {
+                    "size": 3,
+                    "type": "category_sunburst"
+                }
+            ],
+            "id": "summary",
+            "name": "Summary"
+        },
+        {
+            "elements": [
+                {
+                    "size": 3,
+                    "type": "top_apps"
+                },
+                {
+                    "size": 3,
+                    "type": "top_titles"
+                }
+            ],
+            "id": "window",
+            "name": "Window"
+        },
+        {
+            "elements": [
+                {
+                    "size": 3,
+                    "type": "top_domains"
+                },
+                {
+                    "size": 3,
+                    "type": "top_urls"
+                }
+            ],
+            "id": "browser",
+            "name": "Browser"
+        },
+        {
+            "elements": [
+                {
+                    "size": 3,
+                    "type": "top_editor_files"
+                },
+                {
+                    "size": 3,
+                    "type": "top_editor_projects"
+                },
+                {
+                    "size": 3,
+                    "type": "top_editor_languages"
+                }
+            ],
+            "id": "editor",
+            "name": "Editor"
+        }
+    ],
+    "requestTimeout": 30,
+    "always_active_pattern": ".*okular.*|.*Okular.*|.*firefox.*|.*Firefox.*",
+    "useColorFallback": true
+}

@@ -1,0 +1,32 @@
+[general]
+import = [
+    "~/.config/alacritty/themes/themes/gruvbox_dark.toml"
+]
+
+[font]
+size = 12.0
+
+[font.normal]
+family = "Terminus"
+
+[font.bold]
+family = "Terminus"
+
+[font.italic]
+family = "Terminus"
+
+[font.bold_italic]
+family = "Terminus"
+
+
+# [font.normal]
+# family = "Unifont"
+
+# [font.bold]
+# family = "Unifont"
+
+# [font.italic]
+# family = "Unifont"
+
+# [font.bold_italic]
+# family = "Unifont"

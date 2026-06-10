@@ -1,0 +1,31 @@
+[Desktop Entry]
+FullScreen=false
+
+[General]
+LockSidebar=true
+ShowSidebar=true
+
+[Recent Files]
+File1[$e]=/mnt/shared/school/textbooks/MC - Microcontrollers/1._ARM System Developer's Guide.pdf
+File10[$e]=/mnt/shared/school/question_banks/DBMS/BCS403 DBMS_QUESTION BANK.pdf
+File2[$e]=/mnt/shared/school/question_banks/MC/BCS402 Microcontrollers_QUESTION BANK.pdf
+File3[$e]=/mnt/shared/school/notes/BIE/Module 4-1.pdf
+File4[$e]=/mnt/shared/school/notes/BIE/Module 5-1.pdf
+File5[$e]=/mnt/shared/school/question_banks/BIE/Bio-Inspired engineering - Question Bank.pdf
+File6[$e]=/mnt/shared/school/notes/BIE/Module 3 (1)-1.pdf
+File7[$e]=/mnt/shared/school/textbooks/BIE - Biology Inspired Engineering/Bio-Inspired Engineering Textbook - BIT.pdf
+File8[$e]=/mnt/shared/school/textbooks/DBMS - Database Management Systems/2._Raghu Ramakrishnan - Database Management Systems Ramakrishnan (2018, McGraw-Hill Education).pdf
+File9[$e]=/mnt/shared/school/textbooks/DBMS - Database Management Systems/1._Ramez Elmasri, Shamkant B. Navathe - Fundamentals of Database Systems (2015, Pearson).pdf
+Name1[$e]=1._ARM System Developer's Guide.pdf
+Name10[$e]=BCS403 DBMS_QUESTION BANK.pdf
+Name2[$e]=BCS402 Microcontrollers_QUESTION BANK.pdf
+Name3[$e]=Module 4-1.pdf
+Name4[$e]=Module 5-1.pdf
+Name5[$e]=Bio-Inspired engineering - Question Bank.pdf
+Name6[$e]=Module 3 (1)-1.pdf
+Name7[$e]=Bio-Inspired Engineering Textbook - BIT.pdf
+Name8[$e]=2._Raghu Ramakrishnan - Database Management Systems Ramakrishnan (2018, McGraw-Hill Education).pdf
+Name9[$e]=1._Ramez Elmasri, Shamkant B. Navathe - Fundamentals of Database Systems (2015, Pearson).pdf
+
+[UiSettings]
+ColorScheme=GruvboxColors

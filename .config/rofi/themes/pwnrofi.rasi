@@ -1,0 +1,47 @@
+* {
+    font: "Terminus 12";
+    background-color: #222222;
+    text-color: #ddaaaa;
+    border-color: #ddaaaa;
+}
+
+window {
+    width: 800px;
+    border: 1px;
+    padding: 10px;
+    children: [main];
+}
+
+main {
+    orientation: vertical;
+    children: [promptEntry, overlay, message, listview, num-rows];
+    spacing: 5px;
+}
+
+promptEntry {
+    orientation: vertical;
+    children: [prompt, entry];
+    expand: false;
+}
+
+entry {
+    expand: false;
+    border: 1px;
+    padding: 5px;
+    cursor-width: 6px;
+}
+
+entry, element-text, textbox {
+    highlight: underline #ffffcc;
+}
+
+listview {
+    lines: 16;
+    columns: 2;
+    scrollbar: false;
+}
+
+element-text selected{
+    background-color: #662222;
+    color: #ffdddd;
+}
