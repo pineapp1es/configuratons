@@ -1,6 +1,16 @@
 ;;; ... -*- lexical-binding: t; -*-
 
 
+;; make emacs customize stuff go here pls
+(setopt custom-file "~/.emacs.extra/.emacs.custom.el")
+(load-file custom-file)
+
+;; add extra files to load path
+(add-to-list 'load-path "~/.emacs.extra")
+
+;; diminish stuff from modeline
+(require 'diminish)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; PACKAGES
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -27,7 +37,7 @@
   :diminish
   :bind (("C-s" . swiper)
          :map ivy-minibuffer-map
-         ("TAB" . ivy-alt-done)	
+         ("TAB" . ivy-alt-done)
          ("C-l" . ivy-alt-done)
          ("C-j" . ivy-next-line)
          ("C-k" . ivy-previous-line)
@@ -39,7 +49,10 @@
          ("C-k" . ivy-previous-line)
          ("C-d" . ivy-reverse-i-search-kill))
   )
-(use-package ivy-prescient)
+(use-package ivy-prescient :diminish)
+;; company mode completion
+(use-package company :diminish)
+
 ;; do this for some reason or else warning
 (setopt evil-want-keybinding nil)
 ;; vim keybinds - EVIL MODE
@@ -58,7 +71,8 @@
 (use-package perspective)
 
 ;; woah multi edit with multiple cursor
-(use-package multiple-cursors)
+;; (use-package multiple-cursors) ; real multiple cursor
+(use-package evil-multiedit) ;multiple cursors for evil mode
 
 ;; magic git ui?? magit
 (use-package magit)
@@ -73,7 +87,12 @@
 (use-package emms)
 
 ;; syntax checking
-(use-package flycheck)
+(use-package flycheck
+  :init (global-flycheck-mode))
+
+;; language modes
+(use-package kotlin-mode)
+(use-package typescript-mode)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; CONFIGURATION
@@ -82,18 +101,24 @@
 (add-to-list 'default-frame-alist '(width . 80))  ; Width set to 80 characters
 (add-to-list 'default-frame-alist '(height . 34)) ; Height set to 24 lines
 
-;; make emacs customize stuff go here pls
-(setq custom-file "~/.emacs.custom.el")
+;; dont want eldoc in modeline
+(diminish 'eldoc-mode)
+;; dont want autorevertmode in modeline
+(diminish 'auto-revert-mode)
 
 ;; gruvbox themer
 (load-theme 'gruvbox-dark-soft :NO-CONFIRM)
 ;; FONT FACE
-(set-frame-font "Iosevka 13")
+;; (set-frame-font "Iosevka 13")
+(add-to-list 'default-frame-alist `(font . , "Iosevka 13"))
 
 ;; enable ivy comleton
 (ivy-mode 1)
-(setopt ivy-prescient-enable-sorting nil)
+;;(setopt ivy-prescient-enable-sorting nil)
 (ivy-prescient-mode 1)
+
+;; company mode ON
+(add-hook 'after-init-hook 'global-company-mode)
 
 ;; enable vim keybind -evilmode
 (setopt evil-want-C-u-scroll t)
@@ -129,22 +154,121 @@
 
 ;; always show line numbers
 (global-display-line-numbers-mode 1)
-;; relative line numbers
-(setopt display-line-numbers 'relative)
+;; relative line numbers (set in .emacs.custom.el)
+;; (setopt display-line-numbers-type "relative")
 
 ;; dont show the emacs launch splash screen startup message thing
 (setopt inhibit-startup-message t)
+(defun display-startup-echo-area-message ()
+  (message ""))
 
 ;; custom emacs window title bar name
 (setopt frame-title-format '("%b    |    E M A C S")
       icon-title-format frame-title-format)
 
 ;; scratch buffer msg
-(setopt initial-scratch-message ";; scratch
+(setopt initial-scratch-message ";; hi
 ")
 
 ;; dont make backup files
 (setopt make-back-files nil)
+
+;; incremental search keybind
+(global-set-key (kbd "C-s") 'isearch-forward)
+
+;; ============================
+;;            DIRED
+;; ============================
+
+(setopt dired-async-mode t)
+(defun dired-do-delete-skip-trash (&optional arg)
+  (interactive "P")
+  (let ((delete-by-moving-to-trash nil))
+    (dired-do-delete arg)))
+
+;; ============================
+;;            EMMS
+;; ============================
+
+(emms-all)
+(add-hook 'emms-playlist-source-inserted-hook 'emms-playlist-shuffle)
+(add-hook 'emms-player-started-hook 'emms-show)
+(setopt emms-mode-line-icon-color "red")
+(require 'emms-player-mpd)
+(defun pauseOrShow ()
+  (if emms-player-paused-p
+      (message "Music is paused.")
+    (emms-show)))
+
+(setopt emms-player-paused-hook '(emms-playing-time-pause emms-lyrics-pause pauseOrShow))
+
+(setopt emms-player-list '(emms-player-mpv)
+      emms-info-functions 'emms-info-native
+      emms-add-directory-tree "/mnt/shared/moosic/")
+(setopt emms-info-asynchronously nil)
+(setopt emms-playlist-buffer-name "*Music*")
+(setq-default
+        emms-source-file-default-directory "/mnt/shared/moosic/"
+
+        emms-source-playlist-default-format 'm3u
+        emms-playlist-mode-center-when-go t
+        emms-playlist-default-major-mode 'emms-playlist-mode
+        emms-show-format "| Now Playing: %s |"
+
+        emms-player-mpv-environment '("PULSE_PROP_media.role=music")
+        emms-player-mpv-parameters '("--quiet" "--really-quiet" "--no-audio-display" "--force-window=no" "--vo=null")
+
+        emms-volume-change-function 'emms-volume-mpv-change
+        emms-volume-mpv-method 'smart
+        )
+
+(global-set-key (kbd "C-c m x") 'emms-pause)
+(global-set-key (kbd "C-c m -") 'emms-volume-lower)
+(global-set-key (kbd "C-c m =") 'emms-volume-raise)
+(global-set-key (kbd "C-c m l") 'emms-next)
+(global-set-key (kbd "C-c m h") 'emms-previous)
+(global-set-key (kbd "C-c m b") 'emms-smart-browse)
+(global-set-key (kbd "C-c m X") 'emms-stop)
+(global-set-key (kbd "C-c m c") 'emms-play-playlist)
+(global-set-key (kbd "C-c m p") 'emms-playlist-mode-go)
+(global-set-key (kbd "C-c m s") 'emms-playlist-shuffle)
+(global-set-key (kbd "C-c m ?") 'emms-show)
+(global-set-key (kbd "C-c m d") 'emms-play-dired)
+
+
+;; ============================
+;;          ORG-MODE
+;; ============================
+
+(defun my-org-faces ()
+  (set-face-attribute 'org-document-title nil :height 2.5)
+  (set-face-attribute 'org-document-info nil :height 2.5)
+  (set-face-attribute 'org-document-info-keyword nil :height 0.5)
+  (set-face-attribute 'org-level-1 nil :height 2.0)
+  (set-face-attribute 'org-level-2 nil :height 1.5)
+  (set-face-attribute 'org-level-3 nil :height 1.3)
+  (set-face-attribute 'org-level-4 nil :height 1.2)
+  (set-face-attribute 'org-level-5 nil :height 1.1)
+  )
+
+(add-hook 'org-mode-hook #'my-org-faces)
+
+;; indent headings
+(require 'org-indent)
+(setq org-startup-indented t)
+
+;; darken code blocks
+(require 'color)
+(set-face-attribute 'org-block nil :background "#389b36573535")
+
+;; ============================
+;;       EVIL-MULTIEDIT
+;; ============================
+
+(require 'evil-multiedit)
+(evil-multiedit-default-keybinds)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (message "loaded config!")
 (message "hi")

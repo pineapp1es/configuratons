@@ -82,6 +82,10 @@ export PATH="$HOME/programs/android-studio/cmdline-tools/bin:$PATH"
 
 eval $(dircolors ~/.dircolors)
 
+# always go into tmux
+if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
+  tmux a -t default || exec tmux new -s default;
+fi
 
 echo 
 echo " ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░"
