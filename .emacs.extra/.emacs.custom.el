@@ -4,16 +4,22 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(compile-command "")
  '(custom-safe-themes
-   '("51fa6edfd6c8a4defc2681e4c438caf24908854c12ea12a1fbfd4d055a9647a3"
+   '("18a1d83b4e16993189749494d75e6adb0e15452c80c431aca4a867bcc8890ca9"
+     "51fa6edfd6c8a4defc2681e4c438caf24908854c12ea12a1fbfd4d055a9647a3"
      default))
  '(display-line-numbers-type 'relative)
+ '(evil-undo-system 'undo-fu)
+ '(make-backup-files nil)
  '(package-selected-packages
-   '(ace-window browse-kill-ring cape capf company emms evil-collection
-		evil-multiedit flycheck gruvbox-theme ivy-prescient
-		kotlin-mode magit multiple-cursors org perspective
-		typescript-mode undo-fu))
- '(vc-follow-symlinks t))
+   '(ace-window anzu avy browse-kill-ring capf company eglot-java emms
+		evil-collection evil-multiedit flycheck gruvbox-theme
+		ivy-prescient kotlin-mode llama magit multiple-cursors
+		org perspective pyvenv typescript-mode undo-fu))
+ '(python-indent-offset 4)
+ '(vc-follow-symlinks t)
+ '(window-divider-default-places 'bottom-only))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

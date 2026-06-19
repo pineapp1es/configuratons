@@ -1,0 +1,23 @@
+#!/bin/sh
+
+: "${SCALE:=8}"
+
+[ $# -eq 0 ] && set -- "$(mktemp)" && trap exit INT TERM HUP QUIT && trap 'rm "$1"' EXIT && cat > "$1"
+
+read -r h w _ << .
+$(wc -Ll "$1")
+.
+
+printf 'P1\n%d %d\n1\n' $((SCALE*w)) $((SCALE*h))
+<"$1" tr -c '0O:.\n' ':' | tr '0O:.' '1100' | sed "s/./$(printf '%*s' $SCALE | tr ' ' '&')/g;$(printf '%*s' $((SCALE-1)) | tr ' ' 'p')"
+#| while IFS= read -r l; do
+#	x=0; while [ $x -lt $w ]; do
+#		case "${l:$x:1}" in
+#		[0O])	printf 1 ;;
+#		[:.])	printf 0 ;;
+#		*)	printf 0 ;;
+#		esac
+#		x=$((x+1))
+#	done
+#	echo
+#done

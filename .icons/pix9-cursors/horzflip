@@ -1,0 +1,9 @@
+#!/bin/sh
+
+[ $# -eq 0 ] && set -- "$(mktemp)" && trap exit INT TERM HUP QUIT && trap 'rm "$1"' EXIT && cat > "$1"
+
+read -r n _ << .
+$(wc -L "$1")
+.
+
+cat "$1" | while IFS= read -r l; do printf "%-*s\n" "$n" "$l"; done | rev | sed 's/ *$//'

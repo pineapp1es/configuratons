@@ -1,0 +1,58 @@
+#!/bin/sh
+
+: "${SCALE:=2}"
+
+[ $# -eq 0 ] && set -- "$(mktemp)" && trap exit INT TERM HUP QUIT && trap 'rm "$1"' EXIT && cat > "$1"
+
+num() {
+	: "${len:=8}"
+	for n in "$@"; do
+		printf "%0${len}X" "$n" | sed 's/../&\n/g' | tac
+	done | tr -d '\n'  # | xxd -rp
+}
+
+hex() {
+	for n in "$@"; do
+		printf '%s' "$n" | sed 's/../&\n/g' | tac;
+	done | tr -d '\n'  # | xxd -rp
+}
+
+IFS=' ' read -r h w _ << .
+$(wc -l -L "$1")
+.
+
+IFS=' ' read -r yhot xhot _ <<.
+$(awk 'n = match($0, /[0.-]/) { print FNR-1, n-1; exit } END { print 0, 0 }' "$1")
+.
+
+printf 'Xcur'
+{
+num 16 65536 1
+hex fffd0002
+num 16  # $((8*SCALE))
+num 28 36
+
+hex fffd0002
+num 16 1
+num $((w*SCALE)) $((h*SCALE))
+num $(((xhot*2+1)*SCALE/2)) $(((yhot*2+1)*SCALE/2))
+num 0
+
+while IFS= read -r l; do
+	x=0; o=; while [ "$x" -lt "$w" ]; do
+		# GBRA
+		case "${l:$x:1}" in
+		[0O])	v=ffffffff ;;
+		[:.])	v=000000ff ;;
+		*)	v=00000000 ;;
+		esac
+		for i in $(seq 1 "$SCALE"); do
+			o="$o$v"
+		done
+		x=$((x+1))
+	done
+	for i in $(seq 1 "$SCALE"); do
+		printf '%s' "$o"
+	done
+done
+} < "$1" | xxd -rp

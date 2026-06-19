@@ -1,0 +1,122 @@
+#!/bin/sh
+
+[ $# -eq 0 ] && set -- /dev/stdin
+
+fmt() { [ $# -gt 1 ] && local f="$1" && shift || local f='%s'; printf "$f\n" "$@"; }
+
+alias err='>&2 echo'
+
+die() {
+	err "$@"
+	exit 1
+}
+
+pv() {
+	for v in "$@"; do
+		>&2 eval fmt '%s:\\t%s' "$v" "\$$v"
+	done
+}
+
+v() {
+	var="$1"; shift
+	IFS= read -r "$var" << .
+$(eval '"$@"' "\$$var")
+.
+}
+
+rv() {
+	: "${len:=8}"
+	>&2 printf '%s\t' "$bytes"
+	bytes=$((bytes+len/2))
+	local ret=0
+	read -r -n "$len" "$1"
+	[ $# -gt 1 ] && {
+		v "$@"
+		ret=$?
+	}
+	pv "$1"
+	return $ret
+}
+
+getbytes() {
+	[ "$1" -lt 0 ] && die "bad getbytes"
+	2>/dev/null dd bs="$1" count=1
+	bytes=$((bytes+$1/2))
+}
+
+hex2char() {
+	fmt "$*" | xxd -rp
+}
+
+hexrev() {
+	for n in "$@"; do
+		printf '%s\n' "$(fmt "$n" | sed 's/../&\n/g' | tac | tr -d '\n')"
+	done
+}
+
+hex2int() {
+	for n in "$@"; do
+		printf '%d\n' "0x$(hexrev "$n")"
+	done
+}
+
+for f in "$@"; do
+	[ $# -gt 1 ] && fmt "$f"
+	contents=
+	bytes=0
+	xxd -p "$f" | tr -d '\n' | {
+		rv magic hex2char; [ "$magic" = 'Xcur' ] || die "bad Xcur magic"
+		rv nhdr hex2int
+		rv ver hex2int
+		rv ntoc hex2int
+		>/dev/null getbytes $((24*ntoc))
+#		i=$ntoc; while [ $i -gt 0 ]; do
+#			rv type hexrev
+#			rv size hex2int
+#			rv pos hex2int
+#			case "$type" in
+#			fffd0002) contents="$contents i$pos";;
+#			fffe0001) contents="$contents c$pos";;
+#			*)	;;
+#			esac
+#			i=$((i-1))
+#		done
+#		for c in $contents; do
+#			>/dev/null getbytes $((${c:1}-bytes))
+#		done
+		rv nhdr hex2int
+		rv type hexrev; [ fffd0002 = "$type" ] || die "bad type"
+		rv stype hex2int
+		rv ver hex2int
+		rv w hex2int
+		rv h hex2int
+		rv xhot hex2int
+		rv yhot hex2int
+		rv delay hex2int
+		i=$((w*h)); while [ "$i" -gt 0 ]; do
+#			rv pix hexrev 2>/dev/null
+#			case "$pix" in
+#			ffffffff)	v='O' ;;
+#			ff000000)	v='.' ;;
+#			00000000)	v=' ' ;;
+#			*)		v='?' ;;
+#			esac
+#			printf '%s' "$v"
+#			fmt "$pix" | (
+			{
+				len=2
+				rv b hex2int
+				rv g hex2int
+				rv r hex2int
+				rv a hex2int
+				if [ "$a" -eq 0 ]; then
+					printf '  '
+				else
+					printf '\e[48;2;%d;%d;%dm  \e[49m' "$r" "$g" "$b"
+				fi
+			} 2>/dev/null
+			i=$((i-1))
+			[ "$((i%w))" -eq 0 ] && echo
+		done
+	}
+done

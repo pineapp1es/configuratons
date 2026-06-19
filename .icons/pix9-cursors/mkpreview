@@ -1,0 +1,58 @@
+#!/bin/sh
+
+: "${WIDTH:=7}"
+
+cd src/
+
+set --
+trap exit INT TERM HUP
+trap 'rm -- "$@"' EXIT
+curs=
+for f in default help pointer wait cell crosshair pencil text vertical-text alias copy move no-drop not-allowed grab grabbing all-scroll col-resize row-resize n-resize ne-resize ns-resize nesw-resize zoom-in zoom-out  # n-resize e-resize s-resize w-resize ne-resize nw-resize se-resize sw-resize ew-resize ns-resize nesw-resize nwse-resize  # progress
+
+do
+	[ -e "$f" ] || continue
+	read -r h w _ <<-.
+	$(wc -Ll "$f")
+	.
+	tmpfile="$(mktemp -p /tmp/ "$f".XXXXXX)"
+	set -- "$@" "$tmpfile"
+
+	{
+		for i in $(seq 1 $(((7-h)/2))); do
+			printf '%*s\n' 7 ''
+		done
+		while IFS= read -r l; do
+			printf '%*s%-*s\n' $(((7-w)/2)) '' $((7-(7-w)/2)) "$l"
+		done < "$f"
+		for i in $(seq 1 $(((7+1-h)/2))); do
+			printf '%*s\n' 7 ''
+		done
+	} > "$tmpfile"
+done
+
+printf '%s\n' "$@" | {
+	p=; i=0; while
+		if [ $((i%WIDTH)) -eq 0 -a $i -gt 0 -o $i -eq $# ]; then
+			(IFS=$'\n'; paste -d ' ' $p || exit 1) | {
+			if [ -z "$PRETTY" ]; then
+				cat
+				printf '%*s\n' $((WIDTH*8-1)) ''
+			else
+				(IFS=$'\n'; i=; for f in $p; do
+					[ -n "$i" ] && printf '  '; i=1;
+					f="${f##/tmp/}";f="${f%%.*}"
+					printf '%*s%-*s' $(((14-${#f})/2)) '' $((14-(14-${#f})/2)) "$f"
+				done; printf '\n')
+				sed 's/./&&/g' | tr '0O:.-' '##.. '
+				printf '%*s\n' $((2*(WIDTH*8-1))) ''
+			fi
+			}
+			p=
+		fi
+		IFS= read -r l
+	do
+		p="$p"$'\n'"$l"
+		i=$((i+1))
+	done
+} | sed 's/$/ /'

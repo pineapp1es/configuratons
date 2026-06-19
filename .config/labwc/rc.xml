@@ -15,7 +15,6 @@
     </titlebar>
     <dropShadows>no</dropShadows>
     <maximizedDecoration>titlebar</maximizedDecoration>
-    <icon>Chicago95-tux</icon>
   </theme>
   <desktops number="10" />
   <keyboard>
@@ -220,17 +219,17 @@
     </keybind>
     <!-- = to edge -->
     <keybind key="W-C-w">
-      <action name="GrowToEdge" direction="up"   />
+      <action name="GrowToEdge" direction="up" />
     </keybind>
     <keybind key="W-C-s">
-      <action name="GrowToEdge" direction="down"   />
+      <action name="GrowToEdge" direction="down" />
       <gap>0</gap>
     </keybind>
     <keybind key="W-C-a">
-      <action name="GrowToEdge" direction="left"   />
+      <action name="GrowToEdge" direction="left" />
     </keybind>
     <keybind key="W-C-d">
-      <action name="GrowToEdge" direction="right"   />
+      <action name="GrowToEdge" direction="right" />
     </keybind>
     <!-- WINDOW CONTROL -->
     <keybind key="W-i">
@@ -292,14 +291,12 @@
     <keybind key="W-C-.">
       <action name="Execute" command="pamixer -i 1" />
     </keybind>
-
     <keybind key="XF86AudioMute">
       <action name="Execute" command="pamixer -t" />
     </keybind>
     <keybind key="W-C-/">
       <action name="Execute" command="pamixer -t" />
     </keybind>
-
     <keybind key="XF86AudioMicMute">
       <action name="Execute" command="/home/pineapple/.local/bin/my_stuff/toggle-mic-mute" />
     </keybind>

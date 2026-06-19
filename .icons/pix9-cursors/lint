@@ -1,0 +1,43 @@
+#!/bin/sh
+
+ret=0
+
+[ $# -eq 0 ] && set -- *
+
+echo() { local fmt="$1"; shift; printf "$fmt\n" "$@"; }
+
+echo 'checking validity...'
+grep -Hn '[^0O:. -]' "$@" | { n=0; while IFS= read -r l; do echo "  $l"; n=$((n+1)); done; return "$n"; }
+ret=$((ret+$?))
+
+echo 'checking for missing hotspots...'
+grep -L '[0.-]' "$@" | { n=0; while IFS= read -r l; do echo "  $l"; n=$((n+1)); done; return "$n"; }
+ret=$((ret+$?))
+
+echo 'linting...'
+for f in "$@"; do
+	sed -n 's/  *$//p;$s/^$//p' "$f" | read && echo "  $f"
+	sed -i -e 's/ *$//;/[^ ]/,$!d;:a;/^\n*$/{$d;N;ba;}' "$f"
+done
+
+echo 'finding duplicates...'
+md5sum "$@" | sort | {
+	n=0
+	dup=
+	prev=
+	while IFS= read -r l; do
+		if [ "${l:0:32}" = "${prev:0:32}" ]; then
+			[ 1 != "$dup" ] && dups=$((dups+1)) && echo "  ${prev:34}"
+			echo "  ${l:34}"
+			dup=1
+		else
+			[ 1 = "$dup" ]
+			dup=
+		fi
+		prev="$l"
+	done
+	return $n
+}
+ret=$((ret+$?))
+
+return $ret

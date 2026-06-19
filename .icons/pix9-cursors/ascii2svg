@@ -1,0 +1,58 @@
+#!/bin/sh
+
+: "${SCALE:=16}"
+
+[ $# -eq 0 ] && set -- "$(mktemp)" && trap exit INT TERM HUP QUIT && trap 'rm "$1"' EXIT && cat > "$1"
+
+hexswap() {
+	sed 's/../&\n/g' | tac | tr -d '\n'
+}
+
+read -r h w _ << .
+$(wc -Ll "$1")
+.
+
+{
+	printf '<svg xmlns="http://www.w3.org/2000/svg" width="%d" height="%d" viewBox="0 0 %d %d" style="stroke-width: 0px; background-color: %s">\n' "$((SCALE*w))" "$((SCALE*h))" "$w" "$h" none
+y=0; while IFS= read -r l; do
+	v_=; x=0; o=; len=0; while [ $x -lt $w ]; do
+		case "${l:$x:1}" in
+		[0O])	v=ffffffff ;;
+		[:.])	v=000000ff ;;
+		*)	v=00000000 ;;
+		esac
+		if [ -n "$v_" -a "$v_" != "$v" -o ${#l} -eq $((x+1)) ]; then
+			[ "$v_" != 00000000 ] && printf '<rect x="%d" y="%d" width="%d" height="%d" fill="%s"/>\n' $((x-len)) $y $len 1 "#$v_"
+			len=0
+		fi
+		v_="$v"
+		len=$((len+1))
+		x=$((x+1))
+	done
+	printf '<rect x="%d" y="%d" width="%d" height="%d" fill="%s"/>\n' $((x-len)) $y $len 1 "#$v_"
+	y=$((y+1))
+done | sort -t ' ' -k 5 -k 2 | { # cat; return
+	ids=; f_=; while IFS=' <>/' read -r _ s x y w h f _; do
+		if [ "$f" != "$f_" ]; then
+			[ -n "$f_" ] && printf '</g>\n'
+			printf '<g %s>\n' "$f"
+		fi
+		IFS='" ' read -r _ w_ _ h_ _ <<-.
+		$w $h
+		.
+		case "$ids" in
+		*" ${w_} "*)
+			printf '<use href="#%s" %s/>\n' "${w_}" "$x $y"
+			;;
+		*)
+			printf '<%s/>\n' "$s $x $y $w $h"
+			#printf '<%s id="%s"/>\n' "$s $x $y $w $h" "${w_}"
+			#ids="$ids ${w_} "
+			;;
+		esac
+		f_="$f"
+	done
+	[ -n "$f_" ] && printf '</g>\n'
+}
+printf '</svg>\n'
+} < "$1"

@@ -10,3 +10,4 @@ PATH="/home/pineapple/.local/bin/my_stuff:$PATH"
 # add doom emacs commands to path
 PATH="/home/pineapple/.emacs.d/bin:$PATH"
 XCURSOR_THEME=xcursor-plan9
+# XCURSOR_THEME=pix9-cursors

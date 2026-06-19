@@ -1,0 +1,39 @@
+#!/bin/sh
+
+if [ clean = "$*" ]; then
+	rm -f [esw]-resize [esw][nesw]-resize nw-resize nwse-resize
+	return
+fi
+
+sortname() {
+	for i in "$@"; do
+		printf '%s\n' "$i" | tr 'nsew' '1234' | sed 's/./&\n/g' | sort | tr -d '\n' | tr '1234' 'nsew'
+		echo
+	done
+}
+
+rotname() {
+	for i in "$@"; do
+		sortname "$(printf '%s\n' "$i" | tr 'nesw' 'eswn')"
+	done
+}
+
+for f in n-resize n[nesw]-resize; do
+	[ -e "$f" ] || continue;
+	IFS='-' read -r d l <<-.
+	$f
+	.
+
+	r="$d"
+	while
+		p="$r"
+		r="$(rotname "${r:0:2}" "${r:2:4}" | sort | tr -d '\n')"
+		[ "$d" != "$r" ]
+	do
+		< "$p-$l" diagflip | horzflip > "$r-$l"
+		echo "$r-$l"
+	done
+done
+
+< nesw-resize vertflip > nwse-resize
+echo nwse-resize

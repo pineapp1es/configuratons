@@ -52,6 +52,15 @@ alias mount-shared="mount-fa /dev/nvme0n1p6 /mnt/shared"
 # - battery
 alias bat-stat="sudo tlp-stat -b"
 
+# functionsssss
+# - gradlew
+gradlew-root() {
+    currdir="$(pwd)"
+    cd "$( git rev-parse --show-toplevel )"
+    ./gradlew "$@"
+    cd "$currdir"
+}
+
 # variables for quick access to frequently used folders !!
 export WINDOW='/mnt/window'
 export SHARED='/mnt/shared'
@@ -80,12 +89,19 @@ export ANDROID_HOME="/mnt/shared/dev/android/sdk"
 # add android cli sdk tools to path
 export PATH="$HOME/programs/android-studio/cmdline-tools/bin:$PATH"
 
+# gradle user home (duh)
+export GRADLE_USER_HOME="/mnt/shared/dev/gradle"
+
+# java home (duh duh)
+export JAVA_HOME="/usr/lib/jvm/java-26-openjdk"
+export PATH="$JAVA_HOME/bin:$PATH"
+
 eval $(dircolors ~/.dircolors)
 
-# always go into tmux
-if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
-  tmux a -t default || exec tmux new -s default;
-fi
+# always go into tmux (why did i want this?)
+# if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
+#   tmux a -t default || exec tmux new -s default;
+# fi
 
 echo 
 echo " ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░"

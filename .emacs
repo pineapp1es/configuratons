@@ -1,19 +1,18 @@
 ;;; ... -*- lexical-binding: t; -*-
 
+;; add extra files to load path
+(add-to-list 'load-path "~/.emacs.extra")
 
 ;; make emacs customize stuff go here pls
 (setopt custom-file "~/.emacs.extra/.emacs.custom.el")
 (load-file custom-file)
 
-;; add extra files to load path
-(add-to-list 'load-path "~/.emacs.extra")
-
-;; diminish stuff from modeline
-(require 'diminish)
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; PACKAGES
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; diminish stuff from modeline
+(require 'diminish)
 
 ;; Initialize package sources
 (setopt package-archives '(
@@ -56,13 +55,13 @@
 ;; do this for some reason or else warning
 (setopt evil-want-keybinding nil)
 ;; vim keybinds - EVIL MODE
-(use-package evil)
+(use-package evil :diminish)
 ;; undo fu for evil mode undo redoing
 (use-package undo-fu)
 ;; for evil motions g; and g,
 (use-package goto-chg)
 ;; vim in places where evil doesnt fully support
-(use-package evil-collection)
+(use-package evil-collection :diminish)
 
 ;; ace-window ! - switch b/w windows with keyboard keys thing
 (use-package ace-window)
@@ -87,23 +86,31 @@
 (use-package emms)
 
 ;; syntax checking
-(use-package flycheck
-  :init (global-flycheck-mode))
+(use-package flycheck)
 
-;; language modes
+;; anzu mode to show number of matches
+(use-package anzu
+  :diminish
+  :init (global-anzu-mode +1))
+
+;; programmer language stuff
 (use-package kotlin-mode)
 (use-package typescript-mode)
+(use-package eglot-java)
+(use-package pyvenv)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; CONFIGURATION
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(setopt shell-command-switch "-ic")
 
 (add-to-list 'default-frame-alist '(width . 80))  ; Width set to 80 characters
 (add-to-list 'default-frame-alist '(height . 34)) ; Height set to 24 lines
 
 ;; dont want eldoc in modeline
 (diminish 'eldoc-mode)
-;; dont want autorevertmode in modeline
+;; dont want autorevertmode in modeline (ARev)
 (diminish 'auto-revert-mode)
 
 ;; gruvbox themer
@@ -124,6 +131,9 @@
 (setopt evil-want-C-u-scroll t)
 (evil-mode 1)
 (evil-collection-init)
+;; dont want "unimpaired" in modeline
+(diminish 'evil-collection-unimpaired-mode)
+(diminish 'global-evil-collection-unimpaired-mode)
 
 ;; set ace window keys
 (setopt aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l))
@@ -152,6 +162,9 @@
 ;; Make ESC quit prompts
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 
+;; comp mode keybind
+(global-set-key (kbd "C-x C-c") 'compile)
+
 ;; always show line numbers
 (global-display-line-numbers-mode 1)
 ;; relative line numbers (set in .emacs.custom.el)
@@ -176,11 +189,52 @@
 ;; incremental search keybind
 (global-set-key (kbd "C-s") 'isearch-forward)
 
+;; stop quitting bymistake
+(global-unset-key (kbd "C-z"))
+
+;; send all deletions to trash
+(setq delete-by-moving-to-trash t)
+
+;; ============================
+;;         PROGRAMMER
+;; ============================
+
+;; ----------- EGLOT ----------------
+(use-package eglot
+  :config
+  (setq eglot-report-progress nil)
+  :bind
+  (
+   ("M-RET" . eglot-code-actions)
+   ("C-c k" . eldoc-print-current-symbol-info)
+   ("C-c r" . eglot-rename)
+   ("C-c d" . eglot-find-implementation)
+   ))
+;; (global-set-key (kbd "M-RET") eglot-code-actions)
+;; (global-set-key (kbd "C-c C-r") eglot-rename)
+;; (global-set-key (kbd "C-c C-d") eglot-find-implementation)
+;; (global-set-key (kbd "C-c C-k") eldoc)
+;; ----------- PYTHON
+
+(add-to-list 'eglot-server-programs
+               `(python-mode
+                 . ,(eglot-alternatives '(("pylsp")))))
+
+(add-to-list 'eglot-server-programs
+             `(kotlin-mode
+                 . ("/mnt/shared/linux/programs/kotlin-server-262.7569.0/bin/intellij-server" "--stdio")))
+
+;; ----------- JAVA
+;; (add-hook 'java-mode-hook 'eglot-java-mode)
+(add-hook 'java-mode-hook
+          (lambda () (setq flycheck-java-ecj-jar-path "/mnt/shared/linux/programs/eclipsejavabatchcompiler/ecj-4.40.jar")))
+
 ;; ============================
 ;;            DIRED
 ;; ============================
 
 (setopt dired-async-mode t)
+
 (defun dired-do-delete-skip-trash (&optional arg)
   (interactive "P")
   (let ((delete-by-moving-to-trash nil))
@@ -267,6 +321,27 @@
 
 (require 'evil-multiedit)
 (evil-multiedit-default-keybinds)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; FROM OTHER PPL CONFIG ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; Mr Skybert ------------------------------------------------------------------------------
+;; https://gitlab.com/skybert/my-little-friends/-/blob/master/emacs/.emacs
+;; Treat 'y' or <CR> as yes, 'n' as no.
+(fset 'yes-or-no-p 'y-or-n-p)
+;; Inspired by https://www.emacswiki.org/emacs/KillingBuffer
+(defun tkj/kill-all-other-buffers ()
+  "Kill all other buffers, except the special ones, like *vterm*."
+  (interactive)
+  (mapc
+   (lambda (buffer)
+     (when (and (buffer-live-p buffer)
+                (not (string-match-p "\\*.*\\*" (buffer-name buffer))))
+       (kill-buffer buffer)))
+   (buffer-list)))
+(global-set-key (kbd "C-c b k a") 'tkj/kill-all-other-buffers)
+;; -----------------------------------------------------------------------------------------
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; TEMPORARY ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 

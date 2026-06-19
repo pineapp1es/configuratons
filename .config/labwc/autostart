@@ -8,6 +8,10 @@
 #
 systemctl --user --no-block start labwc-session.target
 
+# source zshrc so i have all aliases and stuff
+source /mnt/shared/linux/configuratons/.zshrc
+
+
 # Set background img.
 swaybg -i /mnt/shared/Media/bg/52230597587_432d014d29_b_waifu2x_art_scan_noise0_scale.png >/dev/null 2>&1 &
 
@@ -21,7 +25,7 @@ swaybg -i /mnt/shared/Media/bg/52230597587_432d014d29_b_waifu2x_art_scan_noise0_
 # kanshi >/dev/null 2>&1 &
 
 # Launch a panel such as yambar or waybar.
-(sleep 2; nohup polybar wow 2>/dev/null & disown) &
+nohup polybar wow 2>/dev/null & disown
 
 # To delay the launch of a particular client it is suggested that the following
 # syntax is used: ( sleep X ; foo ) &
@@ -48,7 +52,7 @@ mako >/dev/null 2>&1 &
 
 exec sway-audio-idle-inhibit &
 
-/home/pineapple/.local/bin/emacs --daemon &
+nohup zsh -i -c "emacs --daemon" >/dev/null 2>&1 &
 
 /home/pineapple/.local/bin/my_stuff/run-syncthing &
 

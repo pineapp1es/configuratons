@@ -1,0 +1,19 @@
+#!/bin/sh
+
+[ $# -eq 0 ] && set -- "$(mktemp)" && trap exit INT TERM HUP QUIT && trap 'rm "$1"' EXIT && cat > "$1"
+
+read -r n _ << .
+$(wc -L "$1")
+.
+
+cat "$1" | {
+	while IFS= read -r l; do
+		l="$(printf '%-*s' "$n" "$l")"
+		for v in $(seq 0 $((n-1))); do
+			eval c"$v"='"$c'"$v"'${l:$v:1}"'
+		done
+	done
+	for v in $(seq 0 $((n-1))); do
+		eval echo '"$c'"$v"'"'
+	done
+} | sed '/^ *$/d;s/ *$//'

@@ -1,0 +1,37 @@
+#!/bin/sh
+
+: "${SCALE:=1}"
+
+[ $# -eq 0 ] && set -- "$(mktemp)" && trap exit INT TERM HUP QUIT && trap 'rm "$1"' EXIT && cat > "$1"
+
+hexswap() {
+	sed 's/../&\n/g' | tac | tr -d '\n'
+}
+
+read -r h w _ << .
+$(wc -Ll "$1")
+.
+
+{
+printf '000002000000000000000000'
+printf '%04x' $((SCALE*h)) $((SCALE*w)) | hexswap
+printf '%02x' 32 $((2**3+2**5))
+while IFS= read -r l; do
+	x=0; o=; while [ $x -lt $w ]; do
+		case "${l:$x:1}" in
+		[0O])	v=ffffffff ;;
+		[:.])	v=000000ff ;;
+		*)	v=00000000 ;;
+		esac
+		i=$SCALE; while [ $i -gt 0 ]; do
+			o="$o$v"
+			i=$((i-1))
+		done
+		x=$((x+1))
+	done
+	i=$SCALE; while [ $i -gt 0 ]; do
+		printf '%s' "$o"
+		i=$((i-1))
+	done
+done
+} < "$1" | xxd -rp

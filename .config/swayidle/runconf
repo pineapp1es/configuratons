@@ -1,4 +1,5 @@
 swayidle \
-	timeout 290 'dim -d 10 && hyprlock --no-fade-in' \
-	timeout 900 'systemctl suspend' \
-	before-sleep 'hyprlock --no-fade-in' >/dev/null 2>&1 &
+	timeout 290 'dim -d 10 && systemctl suspend' 
+	# timeout 290 'dim -d 10 && hyprlock --no-fade-in' \
+	# timeout 900 'systemctl suspend' \
+	# before-sleep 'hyprlock --no-fade-in' >/dev/null 2>&1 &
