@@ -332,7 +332,9 @@
 ;; Treat 'y' or <CR> as yes, 'n' as no.
 (fset 'yes-or-no-p 'y-or-n-p)
 ;; Inspired by https://www.emacswiki.org/emacs/KillingBuffer
-(defun tkj/kill-all-other-buffers ()
+;; original name - (defun tkj/kill-all-other-buffers () - only deleted the buffers
+;; edited version - removes other windows and switches to scratch buffer
+(defun kill-all-buffer-n-windows ()
   "Kill all other buffers, except the special ones, like *vterm*."
   (interactive)
   (mapc
@@ -340,8 +342,11 @@
      (when (and (buffer-live-p buffer)
                 (not (string-match-p "\\*.*\\*" (buffer-name buffer))))
        (kill-buffer buffer)))
-   (buffer-list)))
-(global-set-key (kbd "C-c b k a") 'tkj/kill-all-other-buffers)
+   (buffer-list))
+  (switch-to-buffer "*scratch*") ;; added by me
+  (delete-other-windows)         ;; added by me
+  )
+(global-set-key (kbd "C-c b k a") 'kill-all-buffer-n-windows)
 ;; -----------------------------------------------------------------------------------------
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; TEMPORARY ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
