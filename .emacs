@@ -165,6 +165,9 @@
 ;; comp mode keybind
 (global-set-key (kbd "C-x C-c") 'compile)
 
+;; revert buffer keybind
+(global-set-key (kbd "C-c b r") 'revert-buffer)
+
 ;; always show line numbers
 (global-display-line-numbers-mode 1)
 ;; relative line numbers (set in .emacs.custom.el)

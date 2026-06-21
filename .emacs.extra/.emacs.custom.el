@@ -4,6 +4,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(c-basic-offset 4)
  '(compile-command "")
  '(custom-safe-themes
    '("18a1d83b4e16993189749494d75e6adb0e15452c80c431aca4a867bcc8890ca9"
