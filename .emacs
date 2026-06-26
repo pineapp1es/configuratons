@@ -213,16 +213,13 @@
    ("C-c r" . eglot-rename)
    ("C-c d" . eglot-find-implementation)
    ))
-;; (global-set-key (kbd "M-RET") eglot-code-actions)
-;; (global-set-key (kbd "C-c C-r") eglot-rename)
-;; (global-set-key (kbd "C-c C-d") eglot-find-implementation)
-;; (global-set-key (kbd "C-c C-k") eldoc)
 ;; ----------- PYTHON
 
 (add-to-list 'eglot-server-programs
                `(python-mode
                  . ,(eglot-alternatives '(("pylsp")))))
 
+;; ----------- KOTLIN
 (add-to-list 'eglot-server-programs
              `(kotlin-mode
                  . ("/mnt/shared/linux/programs/kotlin-server-262.7569.0/bin/intellij-server" "--stdio")))
@@ -339,9 +336,9 @@
   (interactive)
   (mapc
    (lambda (buffer)
-     (when (and (buffer-live-p buffer)
+     (when 
                 (not (string-match-p "\\*.*\\*" (buffer-name buffer))))
-       (kill-buffer buffer)))
+       (kill-buffer buffer))
    (buffer-list))
   (switch-to-buffer "*scratch*") ;; added by me
   (delete-other-windows)         ;; added by me
