@@ -298,10 +298,12 @@
       <action name="Execute" command="pamixer -t" />
     </keybind>
     <keybind key="XF86AudioMicMute">
-      <action name="Execute" command="/home/pineapple/.local/bin/my_stuff/toggle-mic-mute" />
+      <!-- <action name="Execute" command="/home/pineapple/.local/bin/my_stuff/toggle-mic-mute" /> -->
+      <action name="Execute" command="pamixer --default-source -t" />
     </keybind>
     <keybind key="W-C-m">
-      <action name="Execute" command="/home/pineapple/.local/bin/my_stuff/toggle-mic-mute" />
+      <!-- <action name="Execute" command="/home/pineapple/.local/bin/my_stuff/toggle-mic-mute" /> -->
+      <action name="Execute" command="pamixer --default-source -t" />
     </keybind>
   </keyboard>
   <core>

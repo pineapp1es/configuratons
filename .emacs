@@ -247,7 +247,7 @@
 (emms-all)
 (add-hook 'emms-playlist-source-inserted-hook 'emms-playlist-shuffle)
 (add-hook 'emms-player-started-hook 'emms-show)
-(setopt emms-mode-line-icon-color "red")
+(setopt emms-mode-line-icon-color "orange")
 (require 'emms-player-mpd)
 (defun pauseOrShow ()
   (if emms-player-paused-p
@@ -337,7 +337,9 @@
   (mapc
    (lambda (buffer)
      (when 
-                (not (string-match-p "\\*.*\\*" (buffer-name buffer))))
+         (not (string-match-p "\\*.*\\*" (buffer-name buffer)))
+       (not "*Music")
+       )
        (kill-buffer buffer))
    (buffer-list))
   (switch-to-buffer "*scratch*") ;; added by me
@@ -346,7 +348,7 @@
 (global-set-key (kbd "C-c b k a") 'kill-all-buffer-n-windows)
 ;; -----------------------------------------------------------------------------------------
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; TEMPORARY ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; TEMPORARY/TESTING ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 

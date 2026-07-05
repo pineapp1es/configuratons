@@ -13,7 +13,8 @@ source /mnt/shared/linux/configuratons/.zshrc
 
 
 # Set background img.
-swaybg -i /mnt/shared/Media/bg/52230597587_432d014d29_b_waifu2x_art_scan_noise0_scale.png >/dev/null 2>&1 &
+# swaybg -i /mnt/shared/Media/bg/52230597587_432d014d29_b_waifu2x_art_scan_noise0_scale.png >/dev/null 2>&1 &
+swaybg -i /mnt/shared/Media/bg/frommovies/Studio\ Ghibli\ stuff/XF247A9C.jpg -m fill >/dev/null 2>&1 &
 
 # Configure output directives such as mode, position, scale and transform.
 # Use wlr-randr to get your output names.

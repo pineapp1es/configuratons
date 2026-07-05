@@ -1,2 +1,7 @@
 *clipboard_history.json
 *clipse.log
+**/tmp_files
+\#*\#
+**/okularrc
+**/okularpartrc
+**/dolphinrc
