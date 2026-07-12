@@ -77,7 +77,12 @@
 (use-package magit)
 
 ;; organiser moder
-(use-package org)
+(use-package org
+  :bind (
+	 ("C-c C-<return>" . 'org-insert-item)
+	 ("C-<return>" . 'org-insert-heading-respect-content)
+	 )
+  )
 
 ;; browsing the kill ring
 (use-package browse-kill-ring)
@@ -85,18 +90,15 @@
 ;; music player??
 (use-package emms)
 
-;; syntax checking
-(use-package flycheck)
-
 ;; anzu mode to show number of matches
 (use-package anzu
   :diminish
   :init (global-anzu-mode +1))
 
 ;; programmer language stuff
+(use-package dart-mode)
 (use-package kotlin-mode)
 (use-package typescript-mode)
-(use-package eglot-java)
 (use-package pyvenv)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -183,8 +185,7 @@
       icon-title-format frame-title-format)
 
 ;; scratch buffer msg
-(setopt initial-scratch-message ";; hi
-")
+(setopt initial-scratch-message "hi ")
 
 ;; dont make backup files
 (setopt make-back-files nil)
@@ -206,6 +207,27 @@
 (use-package eglot
   :config
   (setq eglot-report-progress nil)
+
+  ;; ----------- PYTHON
+  (add-to-list 'eglot-server-programs
+               `(python-mode
+                 . ("pylsp")))
+
+  ;; ----------- KOTLIN
+  (add-to-list 'eglot-server-programs
+               `(kotlin-mode
+                 . ("/mnt/shared/linux/programs/kotlin-server-262.7569.0/bin/intellij-server" "--stdio")))
+
+  ;; ----------- JAVA
+  (add-to-list 'eglot-server-programs
+               `(java-mode
+                 . ("/mnt/shared/linux/programs/jdt-language-server-1.60.0-202606262232/bin/jdtls" "--stdio")))
+
+  ;; ----------- DART
+  (add-to-list 'eglot-server-programs
+               `(dart-mode
+                 . ("/mnt/shared/linux/programs/flutter/bin/dart" "language-server" "--client-id" "emacs.eglot-dart")))
+
   :bind
   (
    ("M-RET" . eglot-code-actions)
@@ -213,21 +235,6 @@
    ("C-c r" . eglot-rename)
    ("C-c d" . eglot-find-implementation)
    ))
-;; ----------- PYTHON
-
-(add-to-list 'eglot-server-programs
-               `(python-mode
-                 . ,(eglot-alternatives '(("pylsp")))))
-
-;; ----------- KOTLIN
-(add-to-list 'eglot-server-programs
-             `(kotlin-mode
-                 . ("/mnt/shared/linux/programs/kotlin-server-262.7569.0/bin/intellij-server" "--stdio")))
-
-;; ----------- JAVA
-;; (add-hook 'java-mode-hook 'eglot-java-mode)
-(add-hook 'java-mode-hook
-          (lambda () (setq flycheck-java-ecj-jar-path "/mnt/shared/linux/programs/eclipsejavabatchcompiler/ecj-4.40.jar")))
 
 ;; ============================
 ;;            DIRED

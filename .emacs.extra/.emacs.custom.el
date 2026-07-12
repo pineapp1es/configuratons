@@ -13,12 +13,10 @@
      default))
  '(display-line-numbers-type 'relative)
  '(evil-undo-system 'undo-fu)
+ '(initial-major-mode 'fundamental-mode)
  '(make-backup-files nil)
- '(package-selected-packages
-   '(ace-window anzu avy browse-kill-ring capf company eglot-java emms
-		evil-collection evil-multiedit flycheck gruvbox-theme
-		ivy-prescient kotlin-mode llama magit multiple-cursors
-		org perspective pyvenv typescript-mode undo-fu))
+ '(package-native-compile t)
+ '(package-selected-packages nil)
  '(python-indent-offset 4)
  '(vc-follow-symlinks t)
  '(window-divider-default-places 'bottom-only))
