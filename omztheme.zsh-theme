@@ -1,5 +1,5 @@
-# mh theme
-# preview: https://cl.ly/1y2x0W0E3t2C0F29043z
+# mh theme - slightly edited
+# original preview: https://cl.ly/1y2x0W0E3t2C0F29043z
 
 # features:
 # path is autoshortened to ~30 characters

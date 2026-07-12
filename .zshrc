@@ -87,7 +87,11 @@ export VISUAL=emacsc
 # export ANDROID_SDK_ROOT="/mnt/shared/dev/android" 
 export ANDROID_HOME="/mnt/shared/dev/android/sdk"
 # add android cli sdk tools to path
-export PATH="$HOME/programs/android-studio/cmdline-tools/bin:$PATH"
+export PATH="$SHARED/linux/programs/android-studio/cmdline-tools/bin:$PATH"
+
+# flutter stuff
+# add flutter and dart sdk to path
+export PATH="$SHARED/linux/programs/flutter/bin:$PATH"
 
 # gradle user home (duh)
 export GRADLE_USER_HOME="/mnt/shared/dev/gradle"
